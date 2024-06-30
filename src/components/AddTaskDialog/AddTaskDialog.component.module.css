@@ -1,16 +1,93 @@
-.AddTaskDialog{
+.addTaskDialog {
     background: red;
     position: relative;
     z-index: 50;
 
-    > div{
-        background: white;
+    > div {
+        inset: 0;
         padding: 20px;
         border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         position: fixed;
         width: 100%;
         top: 0;
         place-items: center;
+        display: grid;
+    }
+
+    h3 {
+        margin-bottom: 10px;
+    }
+
+    form {
+        display: grid;
+        gap: 10px;
+
+        button {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: max-content;
+        }
+    }
+}
+
+.backdrop {
+    inset: 0;
+    position: fixed;
+    background: black;
+    opacity: 0.2;
+}
+
+.dialog {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    display: grid;
+    max-width: 450px;
+
+}
+
+.open-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: grid;
+    grid-auto-flow: column;
+    place-items: center;
+
+    span {
+        font-size: 20px;
+        letter-spacing: 3px;
+    }
+
+    svg {
+        fill: white;
+        width: 100%;
+        max-width: 25px;
+
+        path {
+            stroke: white; /* Define el color del borde */
+            stroke-width: 10;
+        }
+    }
+
+    &:hover {
+        box-shadow: 0 0 10px rgb(255, 0, 35);
+
+        svg {
+            transform: rotate(180deg);
+        }
     }
 }

@@ -9,17 +9,16 @@ function getTasksFromLocalStorage(): Array<Task> {
     const saved = localStorage.getItem(KEY_NAME);
     if (!saved) return [];
     const parsedTasks = JSON.parse(saved);
-    console.log(parsedTasks)
     return [...parsedTasks];
 }
 
+// Update this to use a set instead of an array to improve performance
 export const useProvideTasks = () => {
     // This syntax means lazy initialization. It's a way to initialize a value only once, when the component mounts.
     const [tasks, setTasks] = useState<Array<Task>>(() => getTasksFromLocalStorage());
 
     const deleteTask = (id: string) => {
-        console.log('deleteTask', id)
-        console.log(tasks)
+        console.log('Deleting task with id: ', id)
         const newTasks = tasks.filter((task) => task.id !== id);
         setTasks(newTasks);
     }

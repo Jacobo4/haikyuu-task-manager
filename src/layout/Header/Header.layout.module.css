@@ -1,0 +1,45 @@
+.Header {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    padding-right: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
+}
+
+.Logo {
+    display: grid;
+    background: var(--black);
+    padding: 16px;
+
+    a {
+        color: var(--primary);
+        font-weight: 900;
+        letter-spacing: -2px;
+    }
+}
+
+.Search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+
+    input {
+        border-radius: 5px;
+        width: 100%;
+        height: max-content;
+        padding: 10px;
+        border: none;
+
+        color: var(--primary);
+        &:focus, &:hover, &:focus-visible {
+            outline: none;
+            &::placeholder {
+                color: var(--primary);
+            }
+        }
+
+    }
+}

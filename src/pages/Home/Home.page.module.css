@@ -1,0 +1,27 @@
+@import '../../styles/responsive.css';
+
+.home {
+    display: grid;
+    gap: 20px;
+    align-content: baseline;
+}
+
+.status-wrapper {
+    display: grid;
+    gap: 20px;
+    @media (--screen-md) {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 1rem;
+    }
+
+    > div {
+        display: grid;
+        gap: 10px;
+        align-content: baseline;
+    }
+}
+
+.status-section {
+    display: grid;
+    gap: 10px;
+}

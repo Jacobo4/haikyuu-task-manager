@@ -4,11 +4,11 @@
     /*=====================
     Colors
     =======================*/
-    --primary: #00D4A6;
-    --secondary: hsla(242, 88.4%, 66.3%, 1);
-    --third: #FF5B64;
+    --primary: #ec6800;
+    --secondary: #ff8b43;
+    --third: #CA151F;
 
-    --black: #181818;
+    --black: #141414;
     --black-light: #1d1d1d;
     --gray: #8d8d8d;
     --red: #ff4d4d;
@@ -27,9 +27,9 @@
 
 * {
     box-sizing: border-box;
-    font-family: 'Roboto', 'sans-serif';
+    font-family: 'IBM Plex Sans JP', 'sans-serif';
     transition: background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border 0.1s ease-in-out;
     scroll-behavior: smooth;
 
     &::-webkit-scrollbar {
@@ -75,6 +75,7 @@ main {
     height: 100%;
     width: 100%;
     max-width: 1200px;
+    /* THis value is calculated based on the footer height*/
     min-height: calc(100vh - 78px);
     padding: 10px;
     margin: 0 auto;
@@ -87,13 +88,12 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 h1 {
-    color: var(--secondary);
+    color: var(--primary);
     font-size: 3.0rem;
-    line-height: 3.0rem;
-    font-weight: bold;
+    font-weight: 500;
+    letter-spacing: -5px;
     @media (--screen-md) {
         font-size: 4.0rem;
-        line-height: 4.0rem;
     }
     /*    @media (--screen-xl) {
             font-size: 6.0rem;
@@ -133,3 +133,4 @@ figcaption {
     /* color: var(--font-color-figcaption); */
     font-size: 1.1rem;
 }
+

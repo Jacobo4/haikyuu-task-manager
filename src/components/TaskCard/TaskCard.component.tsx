@@ -1,59 +1,106 @@
-import {Status, Task} from "../../types";
+import {Status, Task} from "../../types.d.ts";
 import {EditText, EditTextarea} from 'react-edit-text';
 import styles from './TaskCard.component.module.css';
 import {Listbox, ListboxButton, ListboxOption, ListboxOptions} from '@headlessui/react'
-import {useEffect, useState} from "react";
+import {useEffect, useReducer} from "react";
+import {MdOutlineKeyboardArrowDown} from "react-icons/md";
+import { IoTrashOutline } from "react-icons/io5";
+import {useTasks} from "../../App.tsx";
 
-const statuses: string[] = ['Pending', 'InProgress', 'Completed'];
-interface TaskCardIProps extends Task {
-    cbDelete: (id: string) => void;
+const statuses: { status: Status, label: string, className: string }[] = [
+    {
+        status: Status.Pending,
+        label: "Pending",
+        className: "status--pending"
+
+    },
+    {
+        status: Status.InProgress,
+        label: "In progress",
+        className: "status--inprogress"
+    },
+    {
+        status: Status.Completed,
+        label: "Completed",
+        className: "status--completed"
+    },
+];
+
+function reducer(state: Task, action) {
+    switch (action.type) {
+        case 'change_title': {
+            return {
+                ...state,
+                title: action.nextTitle,
+            };
+        }
+        case 'change_description': {
+            return {
+                ...state,
+                description: action.nextDescription,
+            };
+        }
+        case 'change_status': {
+            return {
+                ...state,
+                status: action.nextStatus,
+            };
+        }
+    }
+    throw Error('Unknown action: ' + action.type);
 }
 
-function TaskCard({id, title, description, status, isVisible, cbDelete}: TaskCardIProps) {
-    // NOTE: The logic to delete a task is implemented in the parent component, because hook rules states "Don't call Hooks inside loops" and this component is must to be used inside a loop.
-    // TODO: Convert this to a reducer
-
-    const [newStatus, setNewStatus] = useState(statuses[statuses.indexOf(status)]);
-    const [newTitle, setNewTitle] = useState(title);
-    const [newDescription, setNewDescription] = useState(description);
-    const handleChangeTitle = (value: string) => {
-        setNewTitle(value);
-    }
-    const handleChangeDescription = (value: string) => {
-        setNewDescription(value);
-    }
+interface TaskCardIProps  {
+    initialValues: Task;
+}
+function TaskCard({initialValues}: TaskCardIProps) {
+    const {updateTask, deleteTask } = useTasks();
+    const [taskState, dispatch] = useReducer(reducer, {...initialValues});
+    const defaultStatus = statuses.find((stat) => stat.status === taskState.status);
 
     useEffect(() => {
-        console.log('TaskCard changed');
-    }, [newStatus, newTitle, newDescription]);
+        updateTask(taskState.id, taskState);
+    }, [taskState]);
+
     const deleteT = () => {
-        cbDelete(id);
+        deleteTask(taskState.id);
     }
     return (
-        isVisible && (
+        initialValues.isVisible && (
             <div className={styles['TaskCard']}>
                 <EditText
                     name="title"
-                    defaultValue={title}
+                    defaultValue={taskState.title}
                     inputClassName='bg-success'
-                    onSave={handleChangeTitle}
+                    onSave={(e) => dispatch({type: "change_title", nextTitle: e.value})}
                 />
                 <EditTextarea
                     name="description"
-                    defaultValue={description}
-                    onSave={handleChangeDescription}
+                    defaultValue={taskState.description}
+                    rows={5}
+                    onSave={(e) => dispatch({type: "change_description", nextDescription: e.value})}
                 />
-                <Listbox value={newStatus} onChange={setNewStatus}>
-                    <ListboxButton>{newStatus}</ListboxButton>
-                    <ListboxOptions anchor="bottom">
-                        {statuses.map((stat:string) => (
-                            <ListboxOption key={stat} value={stat} className="">
-                                {stat}
-                            </ListboxOption>
-                        ))}
-                    </ListboxOptions>
-                </Listbox>
-                <button onClick={() => deleteT()}>delete</button>
+                <div className={styles['actions-wrapper']}>
+                    <Listbox value={defaultStatus.status} onChange={(value) => dispatch({type: 'change_status', nextStatus: value})}>
+
+                        <ListboxButton className={`${styles['dropdown-trigger']} ${styles[defaultStatus.className]}`}>
+                            {defaultStatus.label}
+                            <MdOutlineKeyboardArrowDown/>
+                        </ListboxButton>
+
+                        <ListboxOptions anchor="bottom" className={styles['dropdown-list']}>
+                            {statuses.map((stat: Status, index) => (
+                                <ListboxOption key={index} value={stat.status} className={styles[stat.className]}>
+                                    {stat.label}
+                                </ListboxOption>
+                            ))}
+                        </ListboxOptions>
+
+                    </Listbox>
+                    <button className={styles['trash-button']} onClick={() => deleteT()}>
+                        <IoTrashOutline/>
+                    </button>
+                </div>
             </div>)
     );
 
