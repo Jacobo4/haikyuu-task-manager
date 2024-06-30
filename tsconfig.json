@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl":  "./",
+    "paths": {
+      "@root/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@globalStyles/*": ["src/styles/*"],
+    },
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
