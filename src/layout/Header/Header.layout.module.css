@@ -1,4 +1,4 @@
-.Header {
+.header {
     display: grid;
     grid-auto-flow: column;
     justify-content: space-between;
@@ -8,7 +8,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
 }
 
-.Logo {
+.logo {
     display: grid;
     background: var(--black);
     padding: 16px;
@@ -20,7 +20,7 @@
     }
 }
 
-.Search {
+.search {
     display: flex;
     align-items: center;
     width: 100%;

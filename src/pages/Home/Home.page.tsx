@@ -1,8 +1,13 @@
-import TaskCard from "../../components/TaskCard/TaskCard.component.tsx";
-import AddTaskDialog from "../../components/AddTaskDialog/AddTaskDialog.component.tsx";
-import {useTasks} from "../../App.tsx";
+// Hooks
+import {useTasks} from "@root/App.tsx";
+// Components
+import TaskCard from "@components/TaskCard/TaskCard.component.tsx";
+import AddTaskDialog from "@components/AddTaskDialog/AddTaskDialog.component.tsx";
+// Styles
 import styles from './Home.page.module.css';
+// Assets
 import BgSVG from "@assets/images/hinataBg.svg?react"
+
 function Home() {
     const {tasks} = useTasks();
 
@@ -18,27 +23,40 @@ function Home() {
     // const tasksElements = tasks.map((task, index) => (<div key={task.id}>{TaskCard({...task, cbDelete: deleteTask(task.id)})}</div>));
     return (
         <main className={styles['home']}>
-           <BgSVG className={styles['bg']}/>
+            <BgSVG className={styles['bg']}/>
+
             <h1>でも・・・まだ負けてないよ？</h1>
+
             <div className={styles['status-wrapper']}>
+                {/* --- pending tasks start ---*/}
                 <div>
                     <h2 className={'title'}>Pending</h2>
+                    <hr/>
                     <div className={styles['status-section']}>
-                        {pendingTasks.length > 0 ? pendingTasks: <span>No tasks pending 🥸</span>}
+                        {pendingTasks.length > 0 ? pendingTasks : <span>No tasks pending 🥸</span>}
                     </div>
                 </div>
+                {/* --- pending tasks start ---*/}
+
+                {/* --- in progress tasks start ---*/}
                 <div>
                     <h2>In progress</h2>
+                    <hr/>
                     <div className={styles['status-section']}>
-                        {inProgressTasks.length > 0 ? inProgressTasks: <span>Nothing to do? 🤨</span>}
+                        {inProgressTasks.length > 0 ? inProgressTasks : <span>Nothing to do? 🤨</span>}
                     </div>
                 </div>
+                {/* --- in progress tasks end ---*/}
+
+                {/* --- completed tasks start ---*/}
                 <div>
                     <h2>Completed</h2>
+                    <hr/>
                     <div className={styles['status-section']}>
-                        {completedTasks.length > 0 ? completedTasks: <span>頑張って 🫡</span>}
+                        {completedTasks.length > 0 ? completedTasks : <span>頑張って 🫡</span>}
                     </div>
                 </div>
+                {/* --- completed tasks end ---*/}
             </div>
 
             <AddTaskDialog/>

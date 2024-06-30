@@ -18,8 +18,9 @@
 .status-wrapper {
     display: grid;
     gap: 20px;
+    grid-template-columns: repeat(auto-fit,minmax(275px,1fr));
+
     @media (--screen-md) {
-        grid-template-columns: 1fr 1fr 1fr;
         grid-gap: 1rem;
     }
 
@@ -27,6 +28,12 @@
         display: grid;
         gap: 10px;
         align-content: baseline;
+    }
+
+    hr {
+        width: 100%;
+        border: 0;
+        border-top: 2px solid var(--gray);
     }
 }
 

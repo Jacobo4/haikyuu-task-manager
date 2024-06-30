@@ -1,15 +1,22 @@
-import {Dialog, DialogBackdrop, DialogPanel} from '@headlessui/react'
-import {useState} from 'react'
-import styles from './AddTaskDialog.component.module.css'
+// Core
+import {useState} from 'react';
+// Hooks
 import {useTasks} from "../../App.tsx";
-import BallSVG from "@assets/images/volleyball.svg?react";
+// Components
+import {Dialog, DialogBackdrop, DialogPanel} from '@headlessui/react';
+// Styles
+import styles from './AddTaskDialog.component.module.css';
+// Animations
 import {motion} from "framer-motion";
+// Assets
+import BallSVG from "@assets/images/volleyball.svg?react";
 
 function AddTaskDialog() {
-    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const {addTask} = useTasks();
-    const handleSubmit = (e) => {
+    const handleSubmit = (e): void => {
         e.preventDefault();
+        // Converts the form data into an object
         const values = Object.fromEntries(new FormData(e.target));
         addTask({
             id: Math.random().toString(36).substr(2, 9),
@@ -19,8 +26,10 @@ function AddTaskDialog() {
         });
         setIsOpen(false);
     }
+
     return (
         <>
+            {/* --- button starts ---*/}
             <motion.button
                 className={styles['open-button']}
                 onClick={() => setIsOpen(true)}
@@ -38,7 +47,9 @@ function AddTaskDialog() {
                 <span>飛べ</span>
                 <BallSVG/>
             </motion.button>
+            {/* --- button ends ---*/}
 
+            {/* --- Dialog starts --- */}
             <Dialog open={isOpen} onClose={() => setIsOpen(false)} className={styles['addTaskDialog']}>
                 <DialogBackdrop className={styles['backdrop']}/>
                 <motion.div
@@ -58,6 +69,7 @@ function AddTaskDialog() {
                     </DialogPanel>
                 </motion.div>
             </Dialog>
+            {/* --- Dialog ends --- */}
         </>
     )
 }

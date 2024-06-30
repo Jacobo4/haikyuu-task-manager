@@ -1,10 +1,12 @@
+// Core
+import {createContext, useContext} from "react";
+// Hooks
+import {useProvideTasks} from "./hooks/useProvideTasks.hook.tsx";
 // Styles
 import '@globalStyles/styles.css';
 // Pages and layout
 import Layout from "./layout/layout.tsx";
 import Home from "./pages/Home/Home.page.tsx";
-import {createContext, useContext} from "react";
-import {useProvideTasks} from "./hooks/useProvideTasks.hook.tsx";
 
 const tasksContext = createContext();
 export const useTasks = () => {
