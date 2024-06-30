@@ -3,6 +3,7 @@ import {useState} from 'react'
 import styles from './AddTaskDialog.component.module.css'
 import {useTasks} from "../../App.tsx";
 import BallSVG from "@assets/images/volleyball.svg?react";
+import {motion} from "framer-motion";
 
 function AddTaskDialog() {
     const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -20,24 +21,42 @@ function AddTaskDialog() {
     }
     return (
         <>
-            <button className={styles['open-button']} onClick={() => setIsOpen(true)}>
+            <motion.button
+                className={styles['open-button']}
+                onClick={() => setIsOpen(true)}
+                animate={{
+                    scale: [1, 2, 1],
+                }}
+                transition={{
+                    duration: 0.5,
+                    ease: "easeInOut",
+                    times: [0, 0.5, 1],
+                    repeat: Infinity,
+                    repeatDelay: 1
+                }}
+            >
                 <span>飛べ</span>
                 <BallSVG/>
-            </button>
+            </motion.button>
+
             <Dialog open={isOpen} onClose={() => setIsOpen(false)} className={styles['addTaskDialog']}>
                 <DialogBackdrop className={styles['backdrop']}/>
-                <div>
+                <motion.div
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    transition={{duration: 0.3}}>
                     <DialogPanel className={styles['dialog']}>
                         <h3>New task</h3>
                         <form onSubmit={handleSubmit}>
                             <label htmlFor="title">Title</label>
-                            <input type="text" id="title" name="title"/>
+                            <input type="text" id="title" name="title" placeholder={"Write and awesome title..."}/>
                             <label htmlFor="description">Description</label>
-                            <textarea id="description" name="description"/>
+                            <textarea id="description" placeholder={"Write an awesome description..."}
+                                      name="description"/>
                             <button type={"submit"}>Add</button>
                         </form>
                     </DialogPanel>
-                </div>
+                </motion.div>
             </Dialog>
         </>
     )

@@ -4,8 +4,10 @@ import styles from './TaskCard.component.module.css';
 import {Listbox, ListboxButton, ListboxOption, ListboxOptions} from '@headlessui/react'
 import {useEffect, useReducer} from "react";
 import {MdOutlineKeyboardArrowDown} from "react-icons/md";
-import { IoTrashOutline } from "react-icons/io5";
+import {IoTrashOutline} from "react-icons/io5";
 import {useTasks} from "../../App.tsx";
+import {motion} from "framer-motion";
+
 
 const statuses: { status: Status, label: string, className: string }[] = [
     {
@@ -50,11 +52,12 @@ function reducer(state: Task, action) {
     throw Error('Unknown action: ' + action.type);
 }
 
-interface TaskCardIProps  {
+interface TaskCardIProps {
     initialValues: Task;
 }
+
 function TaskCard({initialValues}: TaskCardIProps) {
-    const {updateTask, deleteTask } = useTasks();
+    const {updateTask, deleteTask} = useTasks();
     const [taskState, dispatch] = useReducer(reducer, {...initialValues});
     const defaultStatus = statuses.find((stat) => stat.status === taskState.status);
 
@@ -67,7 +70,12 @@ function TaskCard({initialValues}: TaskCardIProps) {
     }
     return (
         initialValues.isVisible && (
-            <div className={styles['TaskCard']}>
+            <motion.div
+                initial={{opacity: 0, scale: 0.9}}
+                animate={{opacity: 1, scale: 1}}
+                transition={{duration: 0.1}}
+                className={styles['TaskCard']}
+            >
                 <EditText
                     name="title"
                     defaultValue={taskState.title}
@@ -81,7 +89,8 @@ function TaskCard({initialValues}: TaskCardIProps) {
                     onSave={(e) => dispatch({type: "change_description", nextDescription: e.value})}
                 />
                 <div className={styles['actions-wrapper']}>
-                    <Listbox value={defaultStatus.status} onChange={(value) => dispatch({type: 'change_status', nextStatus: value})}>
+                    <Listbox value={defaultStatus.status}
+                             onChange={(value) => dispatch({type: 'change_status', nextStatus: value})}>
 
                         <ListboxButton className={`${styles['dropdown-trigger']} ${styles[defaultStatus.className]}`}>
                             {defaultStatus.label}
@@ -101,7 +110,7 @@ function TaskCard({initialValues}: TaskCardIProps) {
                         <IoTrashOutline/>
                     </button>
                 </div>
-            </div>)
+            </motion.div>)
     );
 
 
